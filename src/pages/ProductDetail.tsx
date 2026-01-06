@@ -5,6 +5,7 @@ import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
 import { ImageGallery } from '@/components/products/ImageGallery';
 import { ProductCard } from '@/components/products/ProductCard';
+import { ProductReviews } from '@/components/products/ProductReviews';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import {
@@ -346,6 +347,9 @@ const ProductDetail = () => {
           </div>
         </div>
       </section>
+
+      {/* Reviews Section */}
+      <ProductReviews rating={mockProduct.rating} reviewCount={mockProduct.reviewCount} />
 
       {/* People Also Viewed */}
       <section className="py-16 lg:py-24 bg-background-secondary">
