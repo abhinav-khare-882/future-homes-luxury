@@ -1,6 +1,12 @@
 import { useState, useEffect } from 'react';
 import { Search, MapPin, User, ShoppingBag, Menu, X, ChevronDown } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
+
+// Helper to convert name to URL slug
+const nameToSlug = (name: string) => {
+  return name.toLowerCase().replace(/\s+/g, '-').replace(/é/g, 'e');
+};
 
 const categories = [
   {
@@ -53,9 +59,9 @@ export const Navbar = () => {
         {/* Desktop Navigation */}
         <div className="hidden lg:flex items-center justify-between h-20">
           {/* Logo */}
-          <a href="/" className="font-serif text-2xl tracking-tight text-primary">
+          <Link to="/" className="font-serif text-2xl tracking-tight text-primary">
             Future Homes
-          </a>
+          </Link>
 
           {/* Category Navigation */}
           <div className="flex items-center space-x-8">
@@ -66,23 +72,26 @@ export const Navbar = () => {
                 onMouseEnter={() => setActiveDropdown(category.name)}
                 onMouseLeave={() => setActiveDropdown(null)}
               >
-                <button className="flex items-center space-x-1 text-text-secondary hover:text-primary transition-colors text-sm tracking-wide">
+                <Link 
+                  to={`/category/${nameToSlug(category.name)}`}
+                  className="flex items-center space-x-1 text-text-secondary hover:text-primary transition-colors text-sm tracking-wide"
+                >
                   <span>{category.name}</span>
                   <ChevronDown className="w-3 h-3" />
-                </button>
+                </Link>
 
                 {/* Dropdown */}
                 {activeDropdown === category.name && (
                   <div className="absolute top-full left-0 pt-4 animate-fade-in">
                     <div className="bg-background border border-border shadow-lg min-w-48 py-4">
                       {category.subcategories.map((sub) => (
-                        <a
+                        <Link
                           key={sub}
-                          href="#"
+                          to={`/category/${nameToSlug(category.name)}/${nameToSlug(sub)}`}
                           className="block px-6 py-2 text-sm text-text-secondary hover:text-primary hover:bg-secondary transition-colors"
                         >
                           {sub}
-                        </a>
+                        </Link>
                       ))}
                     </div>
                   </div>
@@ -153,9 +162,9 @@ export const Navbar = () => {
 
         {/* Mobile Navigation */}
         <div className="lg:hidden flex items-center justify-between h-16">
-          <a href="/" className="font-serif text-xl tracking-tight text-primary">
+          <Link to="/" className="font-serif text-xl tracking-tight text-primary">
             Future Homes
-          </a>
+          </Link>
 
           <div className="flex items-center space-x-4">
             <button className="text-text-secondary hover:text-primary transition-colors">
@@ -214,13 +223,14 @@ export const Navbar = () => {
                     {activeDropdown === category.name && (
                       <div className="mt-4 space-y-3 pl-4">
                         {category.subcategories.map((sub) => (
-                          <a
+                          <Link
                             key={sub}
-                            href="#"
+                            to={`/category/${nameToSlug(category.name)}/${nameToSlug(sub)}`}
                             className="block text-text-secondary text-sm"
+                            onClick={() => setIsMobileMenuOpen(false)}
                           >
                             {sub}
-                          </a>
+                          </Link>
                         ))}
                       </div>
                     )}
