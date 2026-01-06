@@ -1,11 +1,17 @@
+import { Link } from 'react-router-dom';
+
 interface CategoryCardProps {
   image: string;
   name: string;
+  slug?: string;
 }
 
-export const CategoryCard = ({ image, name }: CategoryCardProps) => {
+export const CategoryCard = ({ image, name, slug }: CategoryCardProps) => {
+  // Generate slug from name if not provided
+  const categorySlug = slug || name.toLowerCase().replace(/\s+/g, '-');
+  
   return (
-    <a href="#" className="group cursor-pointer block">
+    <Link to={`/category/${categorySlug}`} className="group cursor-pointer block">
       {/* Image Container */}
       <div className="relative aspect-[4/5] overflow-hidden bg-card">
         <img
@@ -22,6 +28,6 @@ export const CategoryCard = ({ image, name }: CategoryCardProps) => {
       <div className="mt-4">
         <h3 className="text-text-primary text-sm tracking-wide">{name}</h3>
       </div>
-    </a>
+    </Link>
   );
 };
