@@ -1,19 +1,22 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { ShoppingBag } from 'lucide-react';
 
 interface ProductCardProps {
+  id?: string;
   image: string;
   name: string;
   price: number;
   category?: string;
 }
 
-export const ProductCard = ({ image, name, price, category }: ProductCardProps) => {
+export const ProductCard = ({ id = '1', image, name, price, category }: ProductCardProps) => {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <div
-      className="group cursor-pointer"
+    <Link
+      to={`/product/${id}`}
+      className="group cursor-pointer block"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -55,6 +58,6 @@ export const ProductCard = ({ image, name, price, category }: ProductCardProps) 
         <h3 className="text-text-primary text-sm font-medium">{name}</h3>
         <p className="text-text-secondary text-sm">${price.toLocaleString()}</p>
       </div>
-    </div>
+    </Link>
   );
 };
